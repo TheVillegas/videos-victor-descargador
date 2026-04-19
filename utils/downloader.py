@@ -2,6 +2,8 @@ import subprocess
 import sys
 import threading
 import os
+import re
+import time
 from config import DOWNLOADS_DIR, YOUTUBE_FORMATS, INSTAGRAM_FORMATS
 from utils.cookies_instagram import (
     load_cookies_json,
@@ -24,15 +26,32 @@ process = None
 output_thread = None
 
 
+def parse_progress(line):
+    """Parse progress from yt-dlp output line."""
+    # Buscar patrones como "  22.0%" o "[download]  22%"
+    patterns = [
+        r"(\d+\.?\d*)%",  # 22.0% o 22%
+        r"(\d+)/(\d+)",  # 1234/5678 (bytes)
+    ]
+
+    for pattern in patterns:
+        match = re.search(pattern, line)
+        if match:
+            if "%" in pattern:
+                return int(float(match.group(1)))
+    return None
+
+
 def download_youtube(url: str, progress_callback=None) -> tuple:
     global state, process, output_thread
 
     if state.status == "downloading":
         return False, "proceso_ya_en_curso"
 
-    state.status = "downloading"
+    # Reset state
+    state.status = "idle"
     state.progress = 0
-    state.message = "Descargando video de YouTube..."
+    state.message = "Preparando descarga..."
     state.error_code = None
 
     output_template = os.path.join(DOWNLOADS_DIR, "%(title)s.%(ext)s")
@@ -41,6 +60,7 @@ def download_youtube(url: str, progress_callback=None) -> tuple:
         sys.executable,
         "-m",
         "yt_dlp",
+        "--no-warnings",
         "-f",
         YOUTUBE_FORMATS,
         "--output",
@@ -52,30 +72,55 @@ def download_youtube(url: str, progress_callback=None) -> tuple:
         cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, bufsize=1
     )
 
+    state.status = "downloading"
+    state.message = "Bajando video de YouTube..."
+
     def read_output():
         global process, state
-        for line in process.stdout:
-            line = line.strip()
-            if progress_callback:
-                progress_callback(line)
-            if "[download]" in line and "%" in line:
-                try:
-                    pct = line.split("%")[0].split()[-1]
-                    state.progress = int(float(pct))
-                except:
-                    pass
-        if process:
-            process.wait()
-            if process.returncode != 0:
-                state.status = "error"
-                state.error_code = "youtube_error"
-            else:
-                state.status = "done"
-                state.progress = 100
-                state.message = "Descarga completada!"
+        lines_buffer = []
 
-    output_thread = threading.Thread(target=read_output)
+        try:
+            for line in process.stdout:
+                if line:
+                    lines_buffer.append(line.strip())
+
+                    if progress_callback:
+                        progress_callback(line.strip())
+
+                    # Parse progress percentage
+                    progress = parse_progress(line)
+                    if progress is not None and progress <= 100:
+                        state.progress = progress
+
+                    # Check for download completion or errors
+                    if "has already been downloaded" in line.lower():
+                        state.status = "done"
+                        state.progress = 100
+                        state.message = "Descarga completada!"
+                    elif "error" in line.lower() or "fail" in line.lower():
+                        state.error_code = "youtube_error"
+
+        except Exception as e:
+            state.error_code = "youtube_error"
+            state.message = str(e)
+        finally:
+            if process:
+                process.wait()
+                if state.status == "downloading":
+                    if process.returncode == 0:
+                        state.status = "done"
+                        state.progress = 100
+                        state.message = "Descarga completada!"
+                    else:
+                        state.status = "error"
+                        state.error_code = "youtube_error"
+
+    output_thread = threading.Thread(target=read_output, daemon=True)
     output_thread.start()
+
+    # Give the thread a moment to start
+    time.sleep(0.1)
+
     return True, ""
 
 
@@ -100,7 +145,7 @@ def download_instagram(url: str, progress_callback=None) -> tuple:
 
     state.status = "downloading"
     state.progress = 0
-    state.message = "Descargando Reel de Instagram..."
+    state.message = "Bajando Reel de Instagram..."
     state.error_code = None
 
     output_template = os.path.join(DOWNLOADS_DIR, "%(title)s.%(ext)s")
@@ -109,6 +154,7 @@ def download_instagram(url: str, progress_callback=None) -> tuple:
         sys.executable,
         "-m",
         "yt_dlp",
+        "--no-warnings",
         "--cookies",
         cookies_path,
         "-f",
@@ -124,32 +170,38 @@ def download_instagram(url: str, progress_callback=None) -> tuple:
 
     def read_output():
         global process, state
-        for line in process.stdout:
-            line = line.strip()
-            if progress_callback:
-                progress_callback(line)
-            if "[download]" in line and "%" in line:
+        try:
+            for line in process.stdout:
+                if line:
+                    if progress_callback:
+                        progress_callback(line.strip())
+
+                    progress = parse_progress(line)
+                    if progress is not None and progress <= 100:
+                        state.progress = progress
+
+        except Exception as e:
+            state.error_code = "instagram_error"
+        finally:
+            if process:
+                process.wait()
                 try:
-                    pct = line.split("%")[0].split()[-1]
-                    state.progress = int(float(pct))
+                    os.remove(cookies_path)
                 except:
                     pass
-        if process:
-            process.wait()
-            try:
-                os.remove(cookies_path)
-            except:
-                pass
-            if process.returncode != 0:
-                state.status = "error"
-                state.error_code = "instagram_error"
-            else:
-                state.status = "done"
-                state.progress = 100
-                state.message = "Descarga completada!"
+                if state.status == "downloading":
+                    if process.returncode == 0:
+                        state.status = "done"
+                        state.progress = 100
+                        state.message = "Descarga completada!"
+                    else:
+                        state.status = "error"
+                        state.error_code = "instagram_error"
 
-    output_thread = threading.Thread(target=read_output)
+    output_thread = threading.Thread(target=read_output, daemon=True)
     output_thread.start()
+
+    time.sleep(0.1)
     return True, ""
 
 
