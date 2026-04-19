@@ -28,12 +28,10 @@ output_thread = None
 
 def parse_progress(line):
     """Parse progress from yt-dlp output line."""
-    # Buscar patrones como "  22.0%" o "[download]  22%"
     patterns = [
-        r"(\d+\.?\d*)%",  # 22.0% o 22%
-        r"(\d+)/(\d+)",  # 1234/5678 (bytes)
+        r"(\d+\.?\d*)%",
+        r"(\d+)/(\d+)",
     ]
-
     for pattern in patterns:
         match = re.search(pattern, line)
         if match:
@@ -48,7 +46,6 @@ def download_youtube(url: str, progress_callback=None) -> tuple:
     if state.status == "downloading":
         return False, "proceso_ya_en_curso"
 
-    # Reset state
     state.status = "idle"
     state.progress = 0
     state.message = "Preparando descarga..."
@@ -62,6 +59,8 @@ def download_youtube(url: str, progress_callback=None) -> tuple:
         "yt_dlp",
         "--no-warnings",
         "--no-playlist",
+        "--merge-output-format",
+        "mp4",
         "-f",
         YOUTUBE_FORMATS,
         "--output",
@@ -78,29 +77,20 @@ def download_youtube(url: str, progress_callback=None) -> tuple:
 
     def read_output():
         global process, state
-        lines_buffer = []
-
         try:
             for line in process.stdout:
                 if line:
-                    lines_buffer.append(line.strip())
-
                     if progress_callback:
                         progress_callback(line.strip())
-
-                    # Parse progress percentage
                     progress = parse_progress(line)
                     if progress is not None and progress <= 100:
                         state.progress = progress
-
-                    # Check for download completion or errors
                     if "has already been downloaded" in line.lower():
                         state.status = "done"
                         state.progress = 100
                         state.message = "Descarga completada!"
                     elif "error" in line.lower() or "fail" in line.lower():
                         state.error_code = "youtube_error"
-
         except Exception as e:
             state.error_code = "youtube_error"
             state.message = str(e)
@@ -118,10 +108,7 @@ def download_youtube(url: str, progress_callback=None) -> tuple:
 
     output_thread = threading.Thread(target=read_output, daemon=True)
     output_thread.start()
-
-    # Give the thread a moment to start
     time.sleep(0.1)
-
     return True, ""
 
 
@@ -157,6 +144,8 @@ def download_instagram(url: str, progress_callback=None) -> tuple:
         "yt_dlp",
         "--no-warnings",
         "--no-playlist",
+        "--merge-output-format",
+        "mp4",
         "--cookies",
         cookies_path,
         "-f",
@@ -177,11 +166,9 @@ def download_instagram(url: str, progress_callback=None) -> tuple:
                 if line:
                     if progress_callback:
                         progress_callback(line.strip())
-
                     progress = parse_progress(line)
                     if progress is not None and progress <= 100:
                         state.progress = progress
-
         except Exception as e:
             state.error_code = "instagram_error"
         finally:
@@ -202,7 +189,6 @@ def download_instagram(url: str, progress_callback=None) -> tuple:
 
     output_thread = threading.Thread(target=read_output, daemon=True)
     output_thread.start()
-
     time.sleep(0.1)
     return True, ""
 
