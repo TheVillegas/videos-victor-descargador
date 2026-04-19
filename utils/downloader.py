@@ -1,4 +1,5 @@
 import subprocess
+import sys
 import threading
 import os
 from config import DOWNLOADS_DIR, YOUTUBE_FORMATS, INSTAGRAM_FORMATS
@@ -36,7 +37,16 @@ def download_youtube(url: str, progress_callback=None) -> tuple:
 
     output_template = os.path.join(DOWNLOADS_DIR, "%(title)s.%(ext)s")
 
-    cmd = ["yt-dlp", "-f", YOUTUBE_FORMATS, "--output", output_template, url]
+    cmd = [
+        sys.executable,
+        "-m",
+        "yt_dlp",
+        "-f",
+        YOUTUBE_FORMATS,
+        "--output",
+        output_template,
+        url,
+    ]
 
     process = subprocess.Popen(
         cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, bufsize=1
@@ -96,7 +106,9 @@ def download_instagram(url: str, progress_callback=None) -> tuple:
     output_template = os.path.join(DOWNLOADS_DIR, "%(title)s.%(ext)s")
 
     cmd = [
-        "yt-dlp",
+        sys.executable,
+        "-m",
+        "yt_dlp",
         "--cookies",
         cookies_path,
         "-f",

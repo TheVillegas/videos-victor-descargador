@@ -1,4 +1,8 @@
-const POLLING_INTERVAL = 2000;
+/* ========================================
+   APP.JS - VIDEOS VICTOR
+   ======================================== */
+
+const POLLING_INTERVAL = 1500;
 let pollingTimer = null;
 
 function descargar() {
@@ -6,12 +10,15 @@ function descargar() {
     const btn = document.getElementById('download-btn');
     
     if (!url) {
-        mostrarMensaje('Por favor, ingresa una URL', 'error');
+        mostrarMensaje('Po, tienes que poner un link weón', 'error');
         return;
     }
     
     btn.disabled = true;
-    btn.textContent = 'Descargando...';
+    btn.innerHTML = `
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        <span>Bajando...</span>
+    `;
     
     fetch('/descargar', {
         method: 'POST',
@@ -23,15 +30,13 @@ function descargar() {
         if (data.success) {
             iniciarPolling();
         } else {
-            mostrarMensaje(data.error, 'error');
-            btn.disabled = false;
-            btn.textContent = '⬇ Descargar Video';
+            mostrarMensaje('❌ ' + data.error, 'error');
+            resetBtn();
         }
     })
     .catch(err => {
-        mostrarMensaje('Error de conexión. Verificá tu internet.', 'error');
-        btn.disabled = false;
-        btn.textContent = '⬇ Descargar Video';
+        mostrarMensaje('❌alhuea, no hay conexión. Verifica tu internet.', 'error');
+        resetBtn();
     });
 }
 
@@ -39,30 +44,34 @@ function iniciarPolling() {
     const progressSection = document.getElementById('progress-section');
     const progressFill = document.getElementById('progress-fill');
     const progressText = document.getElementById('progress-text');
+    const progressPercent = document.getElementById('progress-percent');
     
     progressSection.classList.remove('hidden');
-    progressText.textContent = 'Iniciando descarga...';
+    progressText.textContent = 'Bajando video...';
     
     pollingTimer = setInterval(() => {
         fetch('/estado')
         .then(r => r.json())
         .then(data => {
             progressFill.style.width = data.progress + '%';
-            progressText.textContent = data.message || 'Descargando...';
+            progressPercent.textContent = data.progress + '%';
+            progressText.textContent = data.message || 'Bajando video...';
             
             if (data.status === 'done') {
                 clearInterval(pollingTimer);
-                mostrarMensaje('✓ Descarga completada! El video está en la carpeta "Videos Victor"', 'success');
+                progressFill.style.width = '100%';
+                progressPercent.textContent = '100%';
+                mostrarMensaje('✅ ¡Listo po! El video está en "Videos Victor"', 'success');
                 resetUI();
             } else if (data.status === 'error') {
                 clearInterval(pollingTimer);
-                mostrarMensaje('✗ ' + (data.error || 'Error en la descarga'), 'error');
+                mostrarMensaje('❌ ' + (data.error || 'Algo salió mal weón'), 'error');
                 resetUI();
             }
         })
         .catch(err => {
             clearInterval(pollingTimer);
-            mostrarMensaje('Error al verificar estado', 'error');
+            mostrarMensaje('❌ Se perdió la conexión', 'error');
             resetUI();
         });
     }, POLLING_INTERVAL);
@@ -76,19 +85,28 @@ function mostrarMensaje(texto, tipo) {
     text.textContent = texto;
 }
 
-function resetUI() {
+function resetBtn() {
     const btn = document.getElementById('download-btn');
     btn.disabled = false;
-    btn.textContent = '⬇ Descargar Video';
+    btn.innerHTML = `
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+        <span>Descargar</span>
+    `;
+}
+
+function resetUI() {
+    setTimeout(() => {
+        resetBtn();
+    }, 2000);
     
     setTimeout(() => {
         document.getElementById('progress-section').classList.add('hidden');
         document.getElementById('progress-fill').style.width = '0%';
-    }, 5000);
+    }, 4000);
     
     setTimeout(() => {
         document.getElementById('message-section').classList.add('hidden');
-    }, 8000);
+    }, 6000);
 }
 
 function abrirConfigInstagram() {
@@ -102,14 +120,13 @@ function verificarCookiesStatus() {
         const statusEl = document.getElementById('cookies-status');
         if (statusEl) {
             if (data.configured && data.valid) {
-                statusEl.textContent = '✓ Instagram configurado';
-                statusEl.style.color = '#059669';
+                statusEl.textContent = '✅ Instagram listo';
+                statusEl.classList.add('configured');
             } else if (data.configured) {
-                statusEl.textContent = '⚠ Cookies inválidas';
-                statusEl.style.color = '#F59E0B';
+                statusEl.textContent = '⚠️ Cookies pedidas';
+                statusEl.style.color = '#FBBF24';
             } else {
-                statusEl.textContent = 'No configurado';
-                statusEl.style.color = '#6B7280';
+                statusEl.textContent = 'No cacho Instagram';
             }
         }
     })

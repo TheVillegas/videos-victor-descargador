@@ -7,38 +7,79 @@
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
+    <div class="background-effects"></div>
+    
     <div class="container">
-        <header>
-            <h1>🎬 Videos Victor</h1>
-            <p>Descargador de videos de YouTube e Instagram</p>
+        <header class="hero">
+            <div class="logo">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" fill="#D62828"/>
+                    <path d="M10 8l6 4-6 4V8z" fill="white"/>
+                </svg>
+            </div>
+            <h1>Videos Victor</h1>
+            <p>Descargador Weón 💪</p>
         </header>
 
-        <main>
-            <div class="download-section">
-                <label for="url-input">📎 Pega la URL del video aquí:</label>
-                <input type="text" id="url-input" placeholder="https://www.youtube.com/watch?v=..." autocomplete="off">
-                <button id="download-btn" onclick="descargar()">⬇ Descargar Video</button>
+        <main class="content">
+            <div class="download-card">
+                <div class="card-header">
+                    <span class="platform-badge youtube">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                        YouTube
+                    </span>
+                    <span class="platform-badge instagram">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+                        Instagram
+                    </span>
+                </div>
+
+                <div class="input-group">
+                    <div class="input-wrapper">
+                        <svg class="input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                        <input type="text" id="url-input" placeholder="Pega el link del video aquí..." autocomplete="off">
+                    </div>
+                    <button id="download-btn" class="btn-primary" onclick="descargar()">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                        <span>Descargar</span>
+                    </button>
+                </div>
             </div>
 
-            <div class="instagram-config">
-                <button id="config-ig-btn" onclick="abrirConfigInstagram()">🔐 Configurar Instagram</button>
-                <span id="cookies-status" class="status-text"></span>
-            </div>
-
-            <div id="progress-section" class="hidden">
-                <div class="progress-bar">
+            <div id="progress-section" class="progress-card hidden">
+                <div class="progress-header">
+                    <div class="progress-icon spinning">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+                    </div>
+                    <span id="progress-text">Bajando video...</span>
+                </div>
+                <div class="progress-bar-container">
                     <div id="progress-fill"></div>
                 </div>
-                <p id="progress-text">Esperando...</p>
+                <span class="progress-percent" id="progress-percent">0%</span>
             </div>
 
-            <div id="message-section" class="hidden">
-                <p id="message-text"></p>
+            <div id="message-section" class="message-card hidden">
+                <span id="message-text"></span>
+            </div>
+
+            <div class="ig-config-section">
+                <div class="divider">
+                    <span>o si cachái Instagram</span>
+                </div>
+                <button id="config-ig-btn" class="btn-secondary" onclick="abrirConfigInstagram()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                    <span>Configurar Instagram</span>
+                </button>
+                <span id="cookies-status" class="status-indicator"></span>
             </div>
         </main>
 
-        <footer>
-            <p>Los videos se guardan en la carpeta "Videos Victor"</p>
+        <footer class="footer">
+            <div class="folder-preview">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                <span>Videos Victor</span>
+            </div>
         </footer>
     </div>
 
