@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Videos Victor - Descargador</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎬 Videos Victor</h1>
+            <p>Descargador de videos de YouTube e Instagram</p>
+        </header>
+
+        <main>
+            <div class="download-section">
+                <label for="url-input">📎 Pega la URL del video aquí:</label>
+                <input type="text" id="url-input" placeholder="https://www.youtube.com/watch?v=..." autocomplete="off">
+                <button id="download-btn" onclick="descargar()">⬇ Descargar Video</button>
+            </div>
+
+            <div class="instagram-config">
+                <button id="config-ig-btn" onclick="abrirConfigInstagram()">🔐 Configurar Instagram</button>
+                <span id="cookies-status" class="status-text"></span>
+            </div>
+
+            <div id="progress-section" class="hidden">
+                <div class="progress-bar">
+                    <div id="progress-fill"></div>
+                </div>
+                <p id="progress-text">Esperando...</p>
+            </div>
+
+            <div id="message-section" class="hidden">
+                <p id="message-text"></p>
+            </div>
+        </main>
+
+        <footer>
+            <p>Los videos se guardan en la carpeta "Videos Victor"</p>
+        </footer>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>

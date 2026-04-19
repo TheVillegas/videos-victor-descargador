@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configurar Instagram - Videos Victor</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔐 Configurar Instagram</h1>
+            <p>Necesitas cookies de Instagram para descargar Reels</p>
+        </header>
+
+        <main>
+            <div class="instructions">
+                <h2>¿Cómo obtener las cookies?</h2>
+                <ol>
+                    <li>Abre Instagram en tu navegador (Chrome) e inicia sesión</li>
+                    <li>Presiona <strong>F12</strong> para abrir herramientas de desarrollo</li>
+                    <li>Ve a la pestaña <strong>"Application"</strong> (Chrome)</li>
+                    <li>En el menú lateral, busca <strong>"Cookies"</strong> > <strong>"https://www.instagram.com"</strong></li>
+                    <li>Busca el cookie llamado <strong>"sessionid"</strong></li>
+                    <li>Copia el valor (largos caracteres alfanuméricos)</li>
+                    <li>Pega ese valor en el campo de abajo</li>
+                </ol>
+            </div>
+
+            <div class="cookie-input-section">
+                <label for="sessionid-input">Valor de sessionid:</label>
+                <input type="text" id="sessionid-input" placeholder="Pegá el valor de sessionid aquí...">
+                <button onclick="guardarCookies()">💾 Guardar Cookies</button>
+            </div>
+
+            <div id="message-section" class="hidden">
+                <p id="message-text"></p>
+            </div>
+
+            <button onclick="volver()">← Volver</button>
+        </main>
+    </div>
+
+    <script>
+        function guardarCookies() {
+            const sessionid = document.getElementById('sessionid-input').value.trim();
+            if (!sessionid) {
+                alert('Por favor, ingresá el valor de sessionid');
+                return;
+            }
+            
+            const cookies = [{name: 'sessionid', value: sessionid, domain: '.instagram.com', path: '/'}];
+            
+            fetch('/guardar-cookies', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({cookies})
+            })
+            .then(r => r.json())
+            .then(data => {
+                const msg = document.getElementById('message-section');
+                const txt = document.getElementById('message-text');
+                msg.classList.remove('hidden');
+                if (data.success) {
+                    txt.textContent = '✓ Cookies guardadas correctamente';
+                    txt.className = 'success';
+                } else {
+                    txt.textContent = '✗ Error: ' + data.error;
+                    txt.className = 'error';
+                }
+            });
+        }
+
+        function volver() {
+            window.location.href = '/';
+        }
+    </script>
+</body>
+</html>

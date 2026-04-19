@@ -1,0 +1,211 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.container {
+    background: white;
+    border-radius: 16px;
+    padding: 40px;
+    max-width: 600px;
+    width: 100%;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+h1 {
+    color: #2563EB;
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+header p {
+    color: #6B7280;
+    font-size: 16px;
+}
+
+.download-section {
+    margin-bottom: 25px;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    color: #1F2937;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #E5E7EB;
+    border-radius: 10px;
+    font-size: 16px;
+    margin-bottom: 15px;
+    transition: border-color 0.3s;
+}
+
+input[type="text"]:focus {
+    outline: none;
+    border-color: #2563EB;
+}
+
+button {
+    background: #2563EB;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+    width: 100%;
+}
+
+button:hover {
+    background: #1D4ED8;
+}
+
+button:disabled {
+    background: #9CA3AF;
+    cursor: not-allowed;
+}
+
+.instagram-config {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+    padding-top: 15px;
+    border-top: 1px solid #E5E7EB;
+}
+
+#config-ig-btn {
+    background: #059669;
+    width: auto;
+    padding: 10px 20px;
+    font-size: 14px;
+}
+
+#config-ig-btn:hover {
+    background: #047857;
+}
+
+.status-text {
+    font-size: 14px;
+    color: #6B7280;
+}
+
+#progress-section {
+    margin: 25px 0;
+}
+
+.progress-bar {
+    background: #E5E7EB;
+    border-radius: 10px;
+    height: 20px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+#progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #2563EB, #10B981);
+    width: 0%;
+    transition: width 0.3s;
+}
+
+#progress-text {
+    text-align: center;
+    color: #6B7280;
+    font-size: 14px;
+}
+
+#message-section {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+#message-section.success {
+    background: #D1FAE5;
+    color: #065F46;
+}
+
+#message-section.error {
+    background: #FEE2E2;
+    color: #991B1B;
+}
+
+footer {
+    text-align: center;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #E5E7EB;
+}
+
+footer p {
+    color: #9CA3AF;
+    font-size: 14px;
+}
+
+.hidden {
+    display: none;
+}
+
+.instructions {
+    background: #F3F4F6;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+}
+
+.instructions h2 {
+    color: #1F2937;
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.instructions ol {
+    color: #4B5563;
+    padding-left: 20px;
+}
+
+.instructions li {
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+.cookie-input-section {
+    margin-bottom: 20px;
+}
+
+.cookie-input-section input {
+    margin-bottom: 10px;
+}
+
+.cookie-input-section button {
+    background: #059669;
+}
+
+.cookie-input-section button:hover {
+    background: #047857;
+}

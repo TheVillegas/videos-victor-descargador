@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Git
+.git/
+
+# Cache
+.ruff_cache/
+
+# Videos (downloaded content)
+Videos Victor/
+
+# Cookies (sensitive)
+*.json
+!requirements.txt
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
