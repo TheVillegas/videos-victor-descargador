@@ -16,6 +16,7 @@ from utils.downloader import (
 from utils.cookies_instagram import save_cookies, get_cookies_status
 import os
 import json
+import logging
 
 app = Flask(__name__)
 
@@ -100,4 +101,7 @@ def guardar_cookies():
 
 if __name__ == "__main__":
     os.makedirs(DOWNLOADS_DIR, exist_ok=True)
+    # Enable request logging to see all HTTP requests in console
+    app.logger.setLevel(logging.INFO)
+    logging.getLogger("werkzeug").setLevel(logging.INFO)
     app.run(debug=False, port=5000)
