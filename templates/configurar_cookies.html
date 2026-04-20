@@ -7,50 +7,252 @@
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
+    <div class="background-effects"></div>
+
     <div class="container">
-        <header>
-            <h1>🔐 Configurar Instagram</h1>
-            <p>Necesitas cookies de Instagram para descargar Reels</p>
+        <header class="hero" style="margin-bottom: 24px;">
+            <div class="logo">
+                <svg width="44" height="44" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="24" height="24" rx="6" fill="#E1306C"/>
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0z" fill="#E1306C"/>
+                    <circle cx="12" cy="12" r="3.5" fill="#E1306C"/>
+                    <circle cx="17.5" cy="6.5" r="1.5" fill="#E1306C"/>
+                </svg>
+            </div>
+            <h1 style="font-size: 28px;">Configurar Instagram</h1>
+            <p style="font-size: 14px;">Activa la descarga de Reels y videos desde Instagram</p>
         </header>
 
         <main>
-            <div class="instructions">
-                <h2>¿Cómo obtener las cookies?</h2>
-                <ol>
-                    <li>Abre Instagram en tu navegador (Chrome) e inicia sesión</li>
-                    <li>Presiona <strong>F12</strong> para abrir herramientas de desarrollo</li>
-                    <li>Ve a la pestaña <strong>"Application"</strong> (Chrome)</li>
-                    <li>En el menú lateral, busca <strong>"Cookies"</strong> > <strong>"https://www.instagram.com"</strong></li>
-                    <li>Busca el cookie llamado <strong>"sessionid"</strong></li>
-                    <li>Copia el valor (largos caracteres alfanuméricos)</li>
-                    <li>Pega ese valor en el campo de abajo</li>
-                </ol>
+            <!-- Explicacion simple -->
+            <div class="download-card" style="margin-bottom: 16px;">
+                <h2 style="font-size: 16px; font-weight: 700; margin-bottom: 12px; color: var(--text-white);">
+                    Por que necesito configurar esto?
+                </h2>
+                <p style="font-size: 14px; color: var(--text-gray); line-height: 1.6; margin-bottom: 12px;">
+                    Para descargar videos de Instagram, necesitamos verificar que eres tu quien esta iniciando sesion. Esto se hace mediante un identificador unico llamado <strong style="color: var(--text-white);">sessionid</strong> que obtenemos de tu navegador.
+                </p>
+                <p style="font-size: 14px; color: var(--text-gray); line-height: 1.6;">
+                    No almacenamos tu password. Solo usamos el sessionid para identificar tu cuenta de forma segura.
+                </p>
             </div>
 
-            <div class="cookie-input-section">
-                <label for="sessionid-input">Valor de sessionid:</label>
-                <input type="text" id="sessionid-input" placeholder="Pegá el valor de sessionid aquí...">
-                <button onclick="guardarCookies()">💾 Guardar Cookies</button>
+            <!-- Pasos -->
+            <div class="download-card" style="margin-bottom: 16px;">
+                <h2 style="font-size: 16px; font-weight: 700; margin-bottom: 20px; color: var(--text-white);">
+                    Sigue estos 4 pasos:
+                </h2>
+
+                <!-- Paso 1 -->
+                <div class="step-item">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <div class="step-title">Inicia sesion en Instagram</div>
+                        <div class="step-desc">Abre <strong>instagram.com</strong> en tu navegador (Chrome, Firefox, Edge) e inicia sesion con tu usuario y contrasena.</div>
+                        <div class="step-screenshot">
+                            <div class="screenshot-placeholder">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#6B7280" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                                <span>instagram.com/login</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Paso 2 -->
+                <div class="step-item">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <div class="step-title">Accede a las cookies del sitio</div>
+                        <div class="step-desc">Haz clic en el candado que aparece en la barra de direcciones del navegador, junto a la URL. Se abrira un menu pequeno.</div>
+                        <div class="step-screenshot">
+                            <div class="screenshot-placeholder">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#6B7280" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                                <span>Icono de candado en la barra</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Paso 3 -->
+                <div class="step-item">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <div class="step-title">Busca el cookie "sessionid"</div>
+                        <div class="step-desc">En el menu que aparecio, selecciona <strong style="color: var(--text-white);">"Cookies" > "instagram.com"</strong>. Aparecera una lista de cookies. Busca el que se llame <strong style="color: var(--text-white);">"sessionid"</strong>.</div>
+                        <div class="step-screenshot">
+                            <div class="screenshot-placeholder table-view">
+                                <div style="display: flex; gap: 8px; font-size: 11px; font-family: monospace;">
+                                    <span style="color: var(--accent-yellow);">sessionid</span>
+                                    <span style="color: var(--text-gray);">instagram.com</span>
+                                    <span style="color: var(--accent-green);">xxxxxxxxxxxxx...</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Paso 4 -->
+                <div class="step-item" style="border-bottom: none; padding-bottom: 0;">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <div class="step-title">Copia y pega el valor aqui</div>
+                        <div class="step-desc">Haz clic en la fila de <strong style="color: var(--text-white);">"sessionid"</strong>. Veras que el valor esta marcado. Copialo (Ctrl+C o Cmd+C) y pegalo en el campo de texto de abajo.</div>
+                        <div class="step-screenshot">
+                            <div class="screenshot-placeholder">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#6B7280" stroke-width="1.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                                <span>Copiar valor del cookie</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div id="message-section" class="hidden">
-                <p id="message-text"></p>
+            <!-- Campo de ingreso -->
+            <div class="download-card" style="margin-bottom: 16px;">
+                <h2 style="font-size: 16px; font-weight: 700; margin-bottom: 16px; color: var(--text-white);">
+                    5. Pega el valor de sessionid
+                </h2>
+
+                <div class="input-wrapper" style="margin-bottom: 16px;">
+                    <input
+                        type="text"
+                        id="sessionid-input"
+                        placeholder="Pega aqui el valor largo del cookie sessionid..."
+                        style="padding-left: 16px;"
+                    >
+                </div>
+
+                <div id="message-section" class="message-card hidden" style="margin-bottom: 16px;"></div>
+
+                <button id="save-btn" class="btn-primary" onclick="guardarCookies()" style="width: 100%;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17,21 17,13 7,13 7,21"/><polyline points="7,3 7,8 15,8"/></svg>
+                    <span>Guardar configuracion</span>
+                </button>
             </div>
 
-            <button onclick="volver()">← Volver</button>
+            <!-- Pregunta frecuente -->
+            <div class="download-card" style="margin-bottom: 16px; border: 1px dashed rgba(255,255,255,0.15);">
+                <h2 style="font-size: 14px; font-weight: 700; margin-bottom: 12px; color: var(--text-white);">
+                    Preguntas frecuentes
+                </h2>
+                <div style="display: flex; flex-direction: column; gap: 12px;">
+                    <div>
+                        <strong style="font-size: 13px; color: var(--text-white); display: block; margin-bottom: 4px;">Es seguro?</strong>
+                        <span style="font-size: 13px; color: var(--text-gray);">Si. Solo usamos el sessionid para identificar tu cuenta. No almacenamos tu contrasena ni accedemos a tus datos personales.</span>
+                    </div>
+                    <div>
+                        <strong style="font-size: 13px; color: var(--text-white); display: block; margin-bottom: 4px;">Cuanto dura configurado?</strong>
+                        <span style="font-size: 13px; color: var(--text-gray);">El sessionid expira en semanas o meses, dependiendo de Instagram. Cuando deje de funcionar, veras un mensaje de error y deberas repetir estos pasos.</span>
+                    </div>
+                    <div>
+                        <strong style="font-size: 13px; color: var(--text-white); display: block; margin-bottom: 4px;">No encuentro el cookie sessionid</strong>
+                        <span style="font-size: 13px; color: var(--text-gray);">Asegurate de haber iniciado sesion correctamente en Instagram. Si no aparece sessionid, puede que ya haya expirado. Cierra sesion y vuelve a iniciarla.</span>
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="volver()" class="btn-secondary" style="width: 100%; margin-top: 8px;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                Volver al inicio
+            </button>
         </main>
     </div>
+
+    <style>
+        .step-item {
+            display: flex;
+            gap: 16px;
+            padding-bottom: 24px;
+            margin-bottom: 24px;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .step-number {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--accent-red);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-white);
+            margin-bottom: 6px;
+        }
+
+        .step-desc {
+            font-size: 13px;
+            color: var(--text-gray);
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .step-screenshot {
+            margin-top: 8px;
+        }
+
+        .screenshot-placeholder {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            color: #6B7280;
+            font-size: 11px;
+            font-family: monospace;
+        }
+
+        .table-view {
+            font-family: monospace;
+            padding: 10px 14px;
+        }
+
+        #message-section {
+            text-align: left;
+            justify-content: flex-start;
+        }
+    </style>
 
     <script>
         function guardarCookies() {
             const sessionid = document.getElementById('sessionid-input').value.trim();
+            const btn = document.getElementById('save-btn');
+            const msgSection = document.getElementById('message-section');
+
             if (!sessionid) {
-                alert('Por favor, ingresá el valor de sessionid');
+                msgSection.classList.remove('hidden', 'success', 'error', 'warning');
+                msgSection.classList.add('warning');
+                msgSection.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Por favor, ingresa el valor de sessionid. Sigue los pasos de arriba si no sabes como obtenerlo.</span>';
                 return;
             }
-            
+
+            if (sessionid.length < 20) {
+                msgSection.classList.remove('hidden', 'success', 'error', 'warning');
+                msgSection.classList.add('warning');
+                msgSection.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>El valor ingresado parece muy corto. Verifica que copiaste todo el contenido del campo "Valor" del cookie sessionid.</span>';
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="spinning"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4"/></svg><span>Guardando...</span>';
+
             const cookies = [{name: 'sessionid', value: sessionid, domain: '.instagram.com', path: '/'}];
-            
+
             fetch('/guardar-cookies', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
@@ -58,22 +260,40 @@
             })
             .then(r => r.json())
             .then(data => {
-                const msg = document.getElementById('message-section');
-                const txt = document.getElementById('message-text');
-                msg.classList.remove('hidden');
+                msgSection.classList.remove('hidden', 'success', 'error', 'warning');
                 if (data.success) {
-                    txt.textContent = '✓ Cookies guardadas correctamente';
-                    txt.className = 'success';
+                    msgSection.classList.add('success');
+                    msgSection.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22,4 12,14.01 9,11.01"/></svg><span>Configuracion guardada. Ya puedes descargar Reels desde Instagram.</span>';
+                    btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20,6 9,17 4,12"/></svg><span>Guardado</span>';
+                    setTimeout(() => { window.location.href = '/'; }, 2000);
                 } else {
-                    txt.textContent = '✗ Error: ' + data.error;
-                    txt.className = 'error';
+                    msgSection.classList.add('error');
+                    msgSection.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg><span>Error: ' + (data.error || 'No se pudo guardar. Intenta nuevamente.') + '</span>';
+                    btn.disabled = false;
+                    btn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17,21 17,13 7,13 7,21"/><polyline points="7,3 7,8 15,8"/></svg><span>Reintentar</span>';
                 }
+            })
+            .catch(err => {
+                msgSection.classList.remove('hidden', 'success', 'error', 'warning');
+                msgSection.classList.add('error');
+                msgSection.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Sin conexion. Verifica tu internet e intenta nuevamente.</span>';
+                btn.disabled = false;
+                btn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17,21 17,13 7,13 7,21"/><polyline points="7,3 7,8 15,8"/></svg><span>Reintentar</span>';
             });
         }
 
         function volver() {
             window.location.href = '/';
         }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const input = document.getElementById('sessionid-input');
+            if (input) {
+                input.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') guardarCookies();
+                });
+            }
+        });
     </script>
 </body>
 </html>
